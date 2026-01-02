@@ -33,7 +33,7 @@ const Browse = () => {
     "You often complete slow-burn thrillers and highly rated dramas. This matches your watching pattern.";
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-svh bg-black">
       {nowPlaying.length > 0 && (
         <Hero movie={nowPlaying[0]} reason={heroReason} />
       )}

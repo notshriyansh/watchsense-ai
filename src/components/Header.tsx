@@ -27,8 +27,14 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-linear-to-b from-[#0B0F14]/95 to-transparent backdrop-blur">
-        <div className="flex items-center justify-between px-4 md:px-8 py-3">
+      <header
+        className="
+        fixed top-0 left-0 w-full z-50
+         bg-[#0B0F14]/95 backdrop-blur
+        safe-area
+        "
+      >
+        <div className="flex items-center justify-between px-4 md:px-8 py-2 sm:py-3">
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => navigate("/browse")}

@@ -4,7 +4,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-screen bg-black flex items-center justify-center text-white relative">
+    <div className="min-h-svh w-screen bg-black flex items-center justify-center text-white relative">
       <div className="absolute inset-0 bg-linear-to-b from-black via-black/80 to-indigo-900/20" />
 
       <div className="relative z-10 text-center max-w-lg px-6">

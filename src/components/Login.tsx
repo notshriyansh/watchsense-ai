@@ -51,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative h-screen w-screen">
+    <div className="relative min-h-svh w-screen">
       <img
         className="absolute inset-0 h-full w-full object-cover"
         src="https://images.unsplash.com/photo-1535223289827-42f1e9919769"
