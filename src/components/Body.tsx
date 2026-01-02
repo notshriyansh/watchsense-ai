@@ -1,0 +1,67 @@
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useAppDispatch } from "../utils/hooks";
+import { addUser, removeUser } from "../utils/userSlice";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./Login";
+import Browse from "./Browse";
+import ProtectedRoute from "./ProtectedRoute";
+import ErrorPage from "./ErrorPage";
+import WatchDashboard from "./intelligence/WatchDashboard";
+
+const Body = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid, email, displayName, photoURL }));
+      } else {
+        dispatch(removeUser());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/browse",
+      element: (
+        <ProtectedRoute>
+          <Browse />
+        </ProtectedRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "*",
+      element: <ErrorPage />,
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <ProtectedRoute>
+          <WatchDashboard />
+        </ProtectedRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+  ]);
+
+  return <RouterProvider router={appRouter} />;
+};
+
+export default Body;
