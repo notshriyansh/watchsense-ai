@@ -1,5 +1,5 @@
 export const LOGO =
-  "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/openai.svg";
+  "https://i.pinimg.com/736x/5f/df/a9/5fdfa98001a201aed81d5119d0456915.jpg";
 
 export const API_OPTIONS = {
   method: "GET",
