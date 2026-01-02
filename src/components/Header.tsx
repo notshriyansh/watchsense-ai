@@ -27,44 +27,44 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-linear-to-b from-black/90 to-black/20">
+      <header className="fixed top-0 left-0 w-full z-50 bg-linear-to-b from-[#0B0F14]/95 to-transparent backdrop-blur">
         <div className="flex items-center justify-between px-4 md:px-8 py-3">
-          <img
-            className="w-28 md:w-40 cursor-pointer"
-            src={LOGO}
-            alt="Netflix Logo"
+          <div
+            className="flex items-center gap-2 cursor-pointer"
             onClick={() => navigate("/browse")}
-          />
+          >
+            <img className="w-8 h-8" src={LOGO} alt="CineMind Logo" />
+            <span className="text-white font-semibold text-lg">
+              CineMind AI
+            </span>
+          </div>
 
-          <div className="flex items-center gap-3 md:gap-4">
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setShowGPT(true)}
-              className="bg-red-600 px-3 md:px-4 py-1.5 md:py-2 rounded text-sm md:text-base font-semibold text-white hover:bg-red-700 transition"
+              className="bg-indigo-600 px-4 py-2 rounded-md text-sm font-semibold text-white hover:bg-indigo-500 transition"
             >
-              GPT Search
+              Ask CineMind
             </button>
 
             <button
               onClick={() => navigate("/dashboard")}
-              className="text-white text-sm hover:underline"
+              className="text-gray-300 text-sm hover:text-white transition"
             >
-              Dashboard
+              Intelligence
             </button>
 
             {user && (
               <>
                 <img
-                  className="w-8 h-8 md:w-10 md:h-10 rounded object-cover"
+                  className="w-9 h-9 rounded-full object-cover"
                   src={user.photoURL || DEFAULT_AVATAR}
-                  alt={user.displayName || "User avatar"}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = DEFAULT_AVATAR;
-                  }}
+                  alt="User avatar"
                 />
 
                 <button
                   onClick={handleSignout}
-                  className="hidden md:block text-white text-sm hover:underline"
+                  className="hidden md:block text-gray-300 text-sm hover:text-white"
                 >
                   Sign Out
                 </button>

@@ -14,7 +14,7 @@ import DropOffRow from "./intelligence/DropOffRow";
 
 const Browse = () => {
   const dispatch = useAppDispatch();
-  const { nowPlaying, topRated, popular, heroTrailer } = useAppSelector(
+  const { nowPlaying, topRated, popular } = useAppSelector(
     (store) => store.movies
   );
 
@@ -30,12 +30,15 @@ const Browse = () => {
     }
   }, [dispatch, nowPlaying]);
 
+  const heroReason =
+    "You often complete slow-burn thrillers and highly rated dramas. This matches your watching pattern.";
+
   return (
     <div className="min-h-screen bg-black">
       <Header />
 
-      {heroTrailer && nowPlaying.length > 0 && (
-        <Hero movie={nowPlaying[0]} trailerKey={heroTrailer} />
+      {nowPlaying.length > 0 && (
+        <Hero movie={nowPlaying[0]} reason={heroReason} />
       )}
 
       <ContinueWatchingRow />

@@ -1,22 +1,21 @@
+import { useState } from "react";
 import Header from "../Header";
 import { useAppSelector, useAppDispatch } from "../../utils/hooks";
 import {
   selectWatchState,
-  selectDroppedItems,
   selectInProgressOnly,
 } from "../../utils/watch/watchSelectors";
 import { fetchWatchingProfile } from "../../utils/watch/profileSlice";
 import type { RootState } from "../../utils/appStore";
-import { useState } from "react";
 import WatchLogger from "./WatchLogger";
 import LetterboxdImport from "./LetterboxdImport";
 import MovieCard from "../MovieCard";
+import TasteVector from "./TasteVector";
 
 const WatchDashboard = () => {
   const dispatch = useAppDispatch();
 
   const watchHistory = useAppSelector(selectWatchState);
-  const dropped = useAppSelector(selectDroppedItems);
   const inProgress = useAppSelector(selectInProgressOnly);
 
   const profileText = useAppSelector(
@@ -34,103 +33,88 @@ const WatchDashboard = () => {
   const completedCount = watchHistory.filter(
     (item) => item.progressPercent === 100
   ).length;
-  const droppedCount = dropped.length;
 
   const completionRate =
     totalStarted > 0 ? Math.round((completedCount / totalStarted) * 100) : 0;
 
   const handleShowProfile = () => {
     setShowProfile(true);
-
     if (!profileText && profileStatus === "idle") {
       dispatch(fetchWatchingProfile(watchHistory));
     }
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#0B0F14] text-white">
       <Header />
 
-      <main className="pt-20 px-6 md:px-12 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Your Watch Dashboard</h1>
-
-        <div className="mb-6 flex flex-wrap gap-3">
+      <main className="pt-24 px-6 md:px-12 max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold mb-2">Viewing Intelligence</h1>
+        <p className="text-gray-400 text-sm mb-6">
+          Behavioral analysis derived from your viewing activity
+        </p>
+        <div className="mb-8 flex flex-wrap gap-3">
           <button
             onClick={() => setShowLogger(true)}
-            className="bg-red-600 px-4 py-2 rounded text-sm font-semibold hover:bg-red-700"
+            className="bg-indigo-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-indigo-500 transition"
           >
-            Log What I Watched
+            Log Activity
           </button>
 
           <button
             onClick={() => setShowImport(true)}
-            className="border border-gray-500 px-4 py-2 rounded text-sm hover:bg-gray-800"
+            className="border border-white/20 px-4 py-2 rounded-md text-sm hover:bg-white/10 transition"
           >
-            Import from Letterboxd
+            Import History
           </button>
 
           <button
             onClick={handleShowProfile}
-            className="border border-gray-500 px-4 py-2 rounded text-sm hover:bg-gray-800"
+            className="border border-white/20 px-4 py-2 rounded-md text-sm hover:bg-white/10 transition"
           >
-            Show My AI Profile
+            Generate AI Profile
           </button>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
           <StatCard label="Titles Started" value={totalStarted} />
           <StatCard label="Completed" value={completedCount} />
-          <StatCard label="Dropped" value={droppedCount} />
+          <StatCard label="In Progress" value={inProgress.length} />
           <StatCard label="Completion Rate" value={`${completionRate}%`} />
         </div>
 
+        <TasteVector />
+
         {showProfile && (
-          <div className="bg-neutral-900 rounded-xl p-6 mb-10">
-            <h2 className="text-xl font-semibold mb-4">
-              🤖 Your AI Watching Profile
-            </h2>
+          <div className="bg-neutral-900/70 border border-white/10 rounded-xl p-6 mb-10">
+            <h2 className="text-xl font-semibold mb-4">AI Viewing Profile</h2>
 
             {profileStatus === "loading" && (
-              <p className="text-gray-400 text-sm">Generating insights…</p>
-            )}
-
-            {profileStatus === "failed" && (
-              <p className="text-red-400 text-sm">
-                AI insights unavailable right now.
-              </p>
+              <p className="text-gray-400 text-sm">Analyzing behavior…</p>
             )}
 
             {profileText && (
-              <div className="space-y-3 text-sm text-gray-300 leading-relaxed">
-                {profileText.split("\n").map((line, idx) => (
-                  <p
+              <div className="space-y-4">
+                {parseProfile(profileText).map((section, idx) => (
+                  <ProfileCard
                     key={idx}
-                    className={
-                      line.startsWith("TITLE:")
-                        ? "text-lg font-semibold text-white"
-                        : line.endsWith(":")
-                        ? "text-sm font-semibold text-gray-200 mt-4"
-                        : ""
-                    }
-                  >
-                    {line}
-                  </p>
+                    title={section.title}
+                    content={section.content}
+                  />
                 ))}
               </div>
             )}
           </div>
         )}
 
-        <div className="mt-10">
-          <h2 className="text-xl font-semibold mb-1">Your Logged Titles</h2>
+        <section>
+          <h2 className="text-xl font-semibold mb-1">Logged Titles</h2>
           <p className="text-xs text-gray-400 mb-3">
-            Based on what you’ve watched so far
+            Content you have interacted with
           </p>
 
           {watchHistory.length === 0 ? (
-            <p className="text-gray-400 text-sm">
-              You haven’t logged any titles yet.
-            </p>
+            <p className="text-gray-400 text-sm">No activity logged yet.</p>
           ) : (
             <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
               {watchHistory.map((item) => (
@@ -149,18 +133,7 @@ const WatchDashboard = () => {
               ))}
             </div>
           )}
-        </div>
-
-        <div className="bg-neutral-900 rounded-lg p-6 mt-10">
-          <h2 className="text-xl font-semibold mb-3">Your Watching Style</h2>
-          <p className="text-gray-300 text-sm leading-relaxed">
-            {getWatchingStyle({
-              completionRate,
-              droppedCount,
-              inProgressCount: inProgress.length,
-            })}
-          </p>
-        </div>
+        </section>
       </main>
 
       {showLogger && <WatchLogger onClose={() => setShowLogger(false)} />}
@@ -178,32 +151,51 @@ const StatCard = ({
   label: string;
   value: number | string;
 }) => (
-  <div className="bg-neutral-900/70 rounded-lg p-4 text-center">
-    <div className="text-xl font-semibold">{value}</div>
+  <div className="bg-neutral-900/70 border border-white/10 rounded-lg p-4 text-center">
+    <div className="text-2xl font-semibold">{value}</div>
     <div className="text-xs text-gray-400 mt-1">{label}</div>
   </div>
 );
 
-function getWatchingStyle({
-  completionRate,
-  droppedCount,
-  inProgressCount,
+const ProfileCard = ({
+  title,
+  content,
 }: {
-  completionRate: number;
-  droppedCount: number;
-  inProgressCount: number;
-}) {
-  if (completionRate >= 75) {
-    return "You tend to fully commit to what you start and usually finish shows you begin.";
+  title: string;
+  content: string[];
+}) => (
+  <div className="bg-[#0B0F14] border border-white/10 rounded-lg p-4">
+    <h3 className="text-sm font-semibold text-indigo-400 mb-2">{title}</h3>
+    <ul className="space-y-1 text-sm text-gray-300">
+      {content.map((line, i) => (
+        <li key={i}>• {line}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+function parseProfile(text: string) {
+  const sections: { title: string; content: string[] }[] = [];
+
+  const lines = text
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  let current: { title: string; content: string[] } | null = null;
+
+  for (const line of lines) {
+    if (line.startsWith("**") && line.endsWith("**")) {
+      if (current) sections.push(current);
+      current = {
+        title: line.replace(/\*/g, ""),
+        content: [],
+      };
+    } else if (current) {
+      current.content.push(line.replace(/^- /, ""));
+    }
   }
 
-  if (droppedCount > inProgressCount) {
-    return "You explore a lot of content but drop things quickly if they don’t hook you early.";
-  }
-
-  if (inProgressCount > 3) {
-    return "You like juggling multiple shows at once and watching at your own pace.";
-  }
-
-  return "You have a balanced watching style and selectively continue what interests you.";
+  if (current) sections.push(current);
+  return sections;
 }

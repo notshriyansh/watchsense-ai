@@ -1,5 +1,5 @@
 export const LOGO =
-  "https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png";
+  "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/openai.svg";
 
 export const API_OPTIONS = {
   method: "GET",
@@ -17,4 +17,4 @@ export const DROPOFF_THRESHOLD_DAYS = 7;
 export const MS_IN_DAY = 24 * 60 * 60 * 1000;
 
 export const DEFAULT_AVATAR =
-  "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png";
+  "https://api.dicebear.com/7.x/identicon/svg?seed=cinemind";

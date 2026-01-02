@@ -6,7 +6,6 @@ import type { RootState } from "../../utils/appStore";
 
 const DropOffRow = () => {
   const dispatch = useAppDispatch();
-
   const droppedItems = useAppSelector(selectDroppedItems);
   const insights = useAppSelector(
     (state: RootState) => state.insights.dropOffInsights
@@ -15,16 +14,15 @@ const DropOffRow = () => {
   if (droppedItems.length === 0) return null;
 
   return (
-    <section className="px-4 md:px-8 mb-8">
+    <section className="px-4 md:px-8 mb-10">
       <h2 className="text-white text-lg md:text-xl mb-1 font-semibold">
-        You Might Have Dropped These
+        Drop-off Analysis
       </h2>
-
-      <p className="text-gray-400 text-sm mb-3">
-        AI can help you decide wheether to continue or move on
+      <p className="text-gray-400 text-sm mb-4">
+        Titles you disengaged from — analyzed by AI
       </p>
 
-      <div className="flex gap-4 overflow-x-scroll scrollbar-hide pb-2">
+      <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
         {droppedItems.map((item) => {
           const insight = insights[item.movieId];
 
@@ -43,7 +41,7 @@ const DropOffRow = () => {
               />
 
               <button
-                className="mt-2 text-xs text-red-400 hover:underline"
+                className="mt-2 text-xs text-indigo-400 hover:underline"
                 onClick={() =>
                   dispatch(
                     fetchDropOffInsight({
@@ -53,24 +51,26 @@ const DropOffRow = () => {
                   )
                 }
               >
-                Why did I stop?
+                Analyze drop-off
               </button>
 
               {insight && (
-                <div className="mt-2">
+                <div className="mt-2 space-y-1">
                   <span
                     className={`inline-block text-xs px-2 py-1 rounded font-semibold ${
                       insight.verdict === "CONTINUE"
-                        ? "bg-green-600 text-white"
-                        : "bg-red-600 text-white"
+                        ? "bg-emerald-600 text-white"
+                        : "bg-gray-600 text-white"
                     }`}
                   >
                     {insight.verdict === "CONTINUE"
                       ? "Worth continuing"
-                      : "Okay to drop"}
+                      : "Safe to drop"}
                   </span>
 
-                  <p className="text-xs text-gray-300 mt-1">{insight.reason}</p>
+                  <p className="text-xs text-gray-300 leading-snug">
+                    {insight.reason}
+                  </p>
                 </div>
               )}
             </div>

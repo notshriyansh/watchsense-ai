@@ -19,29 +19,31 @@ const MovieCard = ({ movie, onHover, onLeave }: Props) => {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       className="
+        group
         relative
-        w-32 sm:w-36 md:w-44
+        w-36 md:w-44
         shrink-0
-        cursor-pointer
-        transition-transform
-        md:hover:scale-110
+        rounded-lg
+        overflow-hidden
+        bg-[#111827]
+        border border-white/10
+        hover:border-indigo-500/40
+        transition
       "
     >
-      <img src={posterUrl} alt={movie.title} className="rounded-md w-full" />
+      <img
+        src={posterUrl}
+        alt={movie.title}
+        className="w-full h-56 object-cover"
+      />
 
-      <div
-        className="
-        hidden md:flex
-        absolute inset-0
-        bg-black/70
-        opacity-0 hover:opacity-100
-        transition-opacity
-        rounded-md
-        flex-col justify-end
-        p-3
-      "
-      >
-        <h3 className="text-white text-sm font-semibold">{movie.title}</h3>
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition" />
+
+      <div className="absolute bottom-0 p-3 opacity-0 group-hover:opacity-100 transition">
+        <h3 className="text-white text-sm font-semibold leading-tight line-clamp-2">
+          {movie.title}
+        </h3>
+        <p className="text-xs text-gray-400 mt-1">Tap for insights</p>
       </div>
     </div>
   );

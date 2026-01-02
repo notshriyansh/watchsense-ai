@@ -24,6 +24,8 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
   const [note, setNote] = useState("");
 
   const search = async () => {
+    if (!query.trim()) return;
+
     const [movies, tv] = await Promise.all([
       searchTMDBMovie(query),
       searchTMDBTV(query),
@@ -54,20 +56,21 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-50 flex justify-center items-center">
-      <div className="bg-neutral-900 rounded-xl w-[90vw] max-w-3xl h-[80vh] p-6 text-white flex flex-col">
-        {/* Header */}
+    <div className="fixed inset-0 bg-black/70 backdrop-blur z-50 flex justify-center items-center">
+      <div className="bg-[#0B0F14] border border-white/10 rounded-xl w-[90vw] max-w-4xl h-[85vh] p-6 text-white flex flex-col">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Log What You Watched</h2>
-          <button onClick={onClose} className="text-xl">
+          <h2 className="text-xl font-semibold">Log Viewing Activity</h2>
+          <button
+            onClick={onClose}
+            className="text-xl text-gray-400 hover:text-white"
+          >
             ✕
           </button>
         </div>
 
-        {/* Search */}
         <div className="flex gap-2 mb-4">
           <input
-            className="flex-1 bg-gray-800 p-2 rounded"
+            className="flex-1 bg-gray-800 p-3 rounded-md"
             placeholder="Search movie or TV series"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -75,13 +78,12 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
           />
           <button
             onClick={search}
-            className="bg-red-600 px-4 rounded font-semibold"
+            className="bg-indigo-600 px-5 rounded-md font-semibold hover:bg-indigo-500"
           >
             Search
           </button>
         </div>
 
-        {/* Results */}
         <div className="flex-1 overflow-y-auto pr-2">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {results.map((item) => (
@@ -114,7 +116,9 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
                   onHover={() => {}}
                   onLeave={() => {}}
                 />
+
                 <OTTProviders movieId={item.id} />
+
                 <p className="text-xs text-center text-gray-400 mt-1">
                   {item.media_type === "tv" ? "TV Series" : "Movie"}
                 </p>
@@ -123,8 +127,7 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
           </div>
         </div>
 
-        {/* Controls */}
-        <div className="mt-4 border-t border-gray-700 pt-4">
+        <div className="mt-4 border-t border-white/10 pt-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="text-sm text-gray-400">Status</label>
@@ -153,7 +156,7 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
           </div>
 
           <textarea
-            placeholder="Optional note"
+            placeholder="Optional note (why you stopped / liked it)"
             className="w-full bg-gray-800 p-2 rounded mt-3"
             value={note}
             onChange={(e) => setNote(e.target.value)}

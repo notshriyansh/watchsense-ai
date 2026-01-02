@@ -7,7 +7,6 @@ import {
 
 const ContinueWatchingRow = () => {
   const inProgress = useAppSelector(selectInProgressOnly);
-
   const continueWatching = useAppSelector(selectContinueWatching);
 
   const items = continueWatching.filter((item) =>
@@ -17,14 +16,17 @@ const ContinueWatchingRow = () => {
   if (items.length === 0) return null;
 
   return (
-    <section className="px-4 md:px-8 mb-6">
-      <h2 className="text-white text-lg md:text-xl mb-3 font-semibold">
-        Continue Watching
+    <section className="px-4 md:px-8 mb-8">
+      <h2 className="text-white text-lg md:text-xl mb-1 font-semibold">
+        In Progress
       </h2>
+      <p className="text-gray-400 text-sm mb-3">
+        Titles you are actively engaging with
+      </p>
 
-      <div className="flex gap-3 md:gap-4 overflow-x-scroll scrollbar-hide pb-2">
+      <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
         {items.map((item) => (
-          <div key={item.movieId} className="relative">
+          <div key={item.movieId} className="relative w-40 shrink-0">
             <MovieCard
               movie={
                 {
@@ -37,12 +39,16 @@ const ContinueWatchingRow = () => {
               onLeave={() => {}}
             />
 
-            <div className="absolute left-0 right-0 bottom-0 h-1 bg-gray-700">
+            <div className="mt-2 h-1 rounded bg-gray-700 overflow-hidden">
               <div
-                className="h-full bg-red-600"
+                className="h-full bg-indigo-500 transition-all"
                 style={{ width: `${item.progressPercent}%` }}
               />
             </div>
+
+            <p className="text-xs text-gray-400 mt-1 text-center">
+              {item.progressPercent}% completed
+            </p>
           </div>
         ))}
       </div>
