@@ -4,11 +4,13 @@ import { auth } from "../utils/firebase";
 import { useAppDispatch } from "../utils/hooks";
 import { addUser, removeUser } from "../utils/userSlice";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import Login from "./Login";
 import Browse from "./Browse";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "./ErrorPage";
 import WatchDashboard from "./intelligence/WatchDashboard";
+import AppLayout from "./layout/AppLayout";
 
 const Body = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +43,20 @@ const Body = () => {
       path: "/browse",
       element: (
         <ProtectedRoute>
-          <Browse />
+          <AppLayout>
+            <Browse />
+          </AppLayout>
+        </ProtectedRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <ProtectedRoute>
+          <AppLayout>
+            <WatchDashboard />
+          </AppLayout>
         </ProtectedRoute>
       ),
       errorElement: <ErrorPage />,
@@ -49,15 +64,6 @@ const Body = () => {
     {
       path: "*",
       element: <ErrorPage />,
-    },
-    {
-      path: "/dashboard",
-      element: (
-        <ProtectedRoute>
-          <WatchDashboard />
-        </ProtectedRoute>
-      ),
-      errorElement: <ErrorPage />,
     },
   ]);
 

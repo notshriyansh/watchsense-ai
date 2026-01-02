@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Header from "./Header";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import {
   fetchNowPlayingMovies,
@@ -35,8 +34,6 @@ const Browse = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <Header />
-
       {nowPlaying.length > 0 && (
         <Hero movie={nowPlaying[0]} reason={heroReason} />
       )}

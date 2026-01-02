@@ -22,7 +22,7 @@ const DropOffRow = () => {
         Titles you disengaged from — analyzed by AI
       </p>
 
-      <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+      <div className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory">
         {droppedItems.map((item) => {
           const insight = insights[item.movieId];
 

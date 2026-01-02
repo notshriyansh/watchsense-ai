@@ -57,7 +57,7 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur z-50 flex justify-center items-center">
-      <div className="bg-[#0B0F14] border border-white/10 rounded-xl w-[90vw] max-w-4xl h-[85vh] p-6 text-white flex flex-col">
+      <div className="bg-[#0B0F14] border border-white/10 rounded-xl w-[95vw] sm:w-[90vw] max-w-4xl h-[90vh] sm:h-[85vh] p-4 sm:p-6 text-white flex flex-col">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Log Viewing Activity</h2>
           <button
@@ -85,7 +85,7 @@ const WatchLogger = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div className="flex-1 overflow-y-auto pr-2">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
             {results.map((item) => (
               <div
                 key={`${item.media_type}-${item.id}`}

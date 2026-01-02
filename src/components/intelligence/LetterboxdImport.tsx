@@ -10,7 +10,7 @@ const LetterboxdImport = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur z-50 flex justify-center items-center">
-      <div className="bg-[#0B0F14] border border-white/10 p-6 rounded-xl w-full max-w-md text-white">
+      <div className="bg-[#0B0F14] border border-white/10 p-6 rounded-xl w-[90vw] max-w-md max-h-[85vh] overflow-y-auto text-white">
         <h2 className="text-lg font-semibold mb-1">
           Import External Watch History
         </h2>

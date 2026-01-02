@@ -24,9 +24,12 @@ const ContinueWatchingRow = () => {
         Titles you are actively engaging with
       </p>
 
-      <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+      <div className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory">
         {items.map((item) => (
-          <div key={item.movieId} className="relative w-40 shrink-0">
+          <div
+            key={item.movieId}
+            className="relative w-[40vw] sm:w-40 md:w-44 shrink-0 snap-start"
+          >
             <MovieCard
               movie={
                 {
@@ -46,7 +49,7 @@ const ContinueWatchingRow = () => {
               />
             </div>
 
-            <p className="text-xs text-gray-400 mt-1 text-center">
+            <p className="text-[11px] sm:text-xs text-gray-400 mt-1 text-center">
               {item.progressPercent}% completed
             </p>
           </div>

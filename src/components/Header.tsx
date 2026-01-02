@@ -49,7 +49,7 @@ const Header = () => {
 
             <button
               onClick={() => navigate("/dashboard")}
-              className="text-gray-300 text-sm hover:text-white transition"
+              className="hidden sm:block text-gray-300 text-sm hover:text-white transition"
             >
               Intelligence
             </button>

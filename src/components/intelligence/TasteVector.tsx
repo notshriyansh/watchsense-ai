@@ -20,7 +20,7 @@ const TasteVector = () => {
         <h2 className="text-xl font-semibold">Your Taste Vector</h2>
         <button
           onClick={() => setOpen((o) => !o)}
-          className="text-sm text-indigo-400 hover:underline"
+          className="text-sm text-indigo-400 hover:underline px-2 py-1"
         >
           {open ? "Hide" : "View"}
         </button>

@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
@@ -59,14 +58,19 @@ const Login = () => {
         alt="CineMind background"
       />
 
-      <Header />
-
       <div className="relative z-10 flex justify-center items-center h-full">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="bg-black/70 backdrop-blur p-10 rounded-lg w-112.5 text-white"
+          className="
+    bg-black/70 backdrop-blur
+    p-6 sm:p-10
+    rounded-xl
+    w-[90vw] sm:w-105
+    text-white
+    border border-white/10
+  "
         >
-          <h1 className="font-bold text-3xl py-4">
+          <h1 className="font-bold text-2xl sm:text-3xl py-4">
             {isSignInForm
               ? "Sign in to CineMind"
               : "Create your CineMind account"}

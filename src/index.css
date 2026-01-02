@@ -7,3 +7,11 @@
 .scrollbar-hide {
   scrollbar-width: none;
 }
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  touch-action: manipulation;
+}

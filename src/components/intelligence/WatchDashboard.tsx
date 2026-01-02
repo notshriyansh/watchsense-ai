@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Header from "../Header";
 import { useAppSelector, useAppDispatch } from "../../utils/hooks";
 import {
   selectWatchState,
@@ -46,8 +45,6 @@ const WatchDashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0F14] text-white">
-      <Header />
-
       <main className="pt-24 px-6 md:px-12 max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">Viewing Intelligence</h1>
         <p className="text-gray-400 text-sm mb-6">

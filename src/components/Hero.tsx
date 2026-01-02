@@ -11,14 +11,14 @@ const Hero = ({ movie, reason }: Props) => {
     : "";
 
   return (
-    <section className="relative w-full h-[65vh] text-white">
+    <section className="relative w-full h-[50vh] sm:h-[65vh] text-white">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${backdropUrl})` }}
       />
       <div className="absolute inset-0 bg-linear-to-r from-[#0B0F14] via-[#0B0F14]/85 to-transparent" />
 
-      <div className="relative z-10 max-w-2xl px-6 md:px-12 pt-32">
+      <div className="relative z-10 max-w-2xl px-4 sm:px-12 pt-24 sm:pt-32">
         <span className="text-xs uppercase tracking-widest text-indigo-400">
           CineMind Highlight
         </span>
@@ -42,7 +42,7 @@ const Hero = ({ movie, reason }: Props) => {
           </div>
         )}
 
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <button className="bg-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-indigo-500">
             Add to Watchlist
           </button>
