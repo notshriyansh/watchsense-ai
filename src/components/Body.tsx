@@ -4,6 +4,7 @@ import { auth } from "../utils/firebase";
 import { useAppDispatch } from "../utils/hooks";
 import { addUser, removeUser } from "../utils/userSlice";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Watchlist from "./Watchlist";
 
 import Login from "./Login";
 import Browse from "./Browse";
@@ -61,6 +62,18 @@ const Body = () => {
       ),
       errorElement: <ErrorPage />,
     },
+    {
+      path: "/watchlist",
+      element: (
+        <ProtectedRoute>
+          <AppLayout>
+            <Watchlist />
+          </AppLayout>
+        </ProtectedRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+
     {
       path: "*",
       element: <ErrorPage />,

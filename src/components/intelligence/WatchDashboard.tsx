@@ -44,12 +44,20 @@ const WatchDashboard = () => {
   };
 
   return (
-    <div className="min-h-svh bg-[#0B0F14] text-white">
-      <main className="pt-24 px-6 md:px-12 max-w-6xl mx-auto">
+    <div className="relative min-h-svh text-white">
+      <div
+        style={{
+          backgroundImage:
+            "url(https://images.unsplash.com/photo-1489599849927-2ee91cede3ba)",
+        }}
+      />
+
+      <main className="pt-24 px-4 sm:px-6 md:px-12 max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">Viewing Intelligence</h1>
         <p className="text-gray-400 text-sm mb-6">
           Behavioral analysis derived from your viewing activity
         </p>
+
         <div className="mb-8 flex flex-wrap gap-3">
           <button
             onClick={() => setShowLogger(true)}
@@ -73,7 +81,7 @@ const WatchDashboard = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           <StatCard label="Titles Started" value={totalStarted} />
           <StatCard label="Completed" value={completedCount} />
           <StatCard label="In Progress" value={inProgress.length} />
@@ -116,14 +124,11 @@ const WatchDashboard = () => {
             <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
               {watchHistory.map((item) => (
                 <MovieCard
-                  key={item.movieId}
-                  movie={
-                    {
-                      id: item.movieId,
-                      title: item.title,
-                      poster_path: item.posterPath,
-                    } as any
-                  }
+                  movie={{
+                    id: item.movieId,
+                    title: item.title,
+                    poster_path: item.posterPath,
+                  }}
                   onHover={() => {}}
                   onLeave={() => {}}
                 />

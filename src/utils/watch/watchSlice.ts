@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { WatchProgress } from "./watchTypes";
+import { loadWatchState, saveWatchState } from "../storage";
 
 type WatchState = WatchProgress[];
 
-const initialState: WatchState = [];
+const initialState: WatchState = loadWatchState();
 
 const watchSlice = createSlice({
   name: "watch",
@@ -20,6 +21,7 @@ const watchSlice = createSlice({
       } else {
         state.push(action.payload);
       }
+      saveWatchState(state);
     },
 
     removeFromWatch: (state, action: PayloadAction<number>) => {
@@ -27,6 +29,7 @@ const watchSlice = createSlice({
     },
 
     clearWatchHistory: () => {
+      saveWatchState([]);
       return [];
     },
   },

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../utils/hooks";
 import { LOGO, DEFAULT_AVATAR } from "../utils/constants";
 import GPTSearch from "./GPTSearch";
+import { clearPersistedData } from "../utils/storage";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleSignout = () => {
+    clearPersistedData();
     signOut(auth)
       .then(() => navigate("/"))
       .catch(() => navigate("/error"));
@@ -39,42 +41,46 @@ const Header = () => {
           pt-safe
         "
       >
-        <div className="flex items-center justify-between px-4 md:px-8 py-3">
+        <div className="flex items-center justify-between px-3 sm:px-4 md:px-8 py-2.5">
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => navigate("/browse")}
           >
-            <img className="w-8 h-8" src={LOGO} alt="CineMind Logo" />
-            <span className="text-white font-semibold text-lg">
+            <img className="w-8 h-8 shrink-0" src={LOGO} alt="CineMind Logo" />
+            <span className="hidden sm:block text-white font-semibold text-lg">
               CineMind AI
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setShowGPT(true)}
               className="
                 bg-indigo-600
-                px-4 py-2
+                px-3 sm:px-4 py-2
                 rounded-md
-                text-sm font-semibold
+                text-xs sm:text-sm
+                font-semibold
                 text-white
                 hover:bg-indigo-500
                 transition
               "
             >
-              Ask CineMind
+              Ask
             </button>
 
             <button
               onClick={() => navigate("/dashboard")}
-              className="
-                hidden sm:block
-                text-gray-300 text-sm
-                hover:text-white transition
-              "
+              className="hidden sm:block text-gray-300 text-sm hover:text-white"
             >
               Intelligence
+            </button>
+
+            <button
+              onClick={() => navigate("/watchlist")}
+              className="hidden sm:block text-gray-300 text-sm hover:text-white"
+            >
+              Watchlist
             </button>
 
             <button
@@ -88,18 +94,14 @@ const Header = () => {
             {user && (
               <>
                 <img
-                  className="w-9 h-9 rounded-full object-cover"
+                  className="w-9 h-9 rounded-full object-cover border border-white/10"
                   src={user.photoURL || DEFAULT_AVATAR}
                   alt="User avatar"
                 />
 
                 <button
                   onClick={handleSignout}
-                  className="
-                    hidden md:block
-                    text-gray-300 text-sm
-                    hover:text-white
-                  "
+                  className="hidden md:block text-gray-300 text-sm hover:text-white"
                 >
                   Sign Out
                 </button>
@@ -118,8 +120,8 @@ const Header = () => {
               border-t border-white/10
               rounded-t-2xl
               p-6
-              animate-slide-up
               pb-safe
+              animate-slide-up
             "
           >
             <button
@@ -127,9 +129,19 @@ const Header = () => {
                 navigate("/dashboard");
                 setShowMobileMenu(false);
               }}
-              className="w-full text-left py-3 text-lg font-semibold text-white"
+              className="w-full py-3 text-lg font-semibold text-white"
             >
               Viewing Intelligence
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/watchlist");
+                setShowMobileMenu(false);
+              }}
+              className="w-full py-3 text-lg font-semibold text-white"
+            >
+              Watchlist
             </button>
 
             <button
@@ -137,14 +149,14 @@ const Header = () => {
                 setShowGPT(true);
                 setShowMobileMenu(false);
               }}
-              className="w-full text-left py-3 text-lg font-semibold text-white"
+              className="w-full py-3 text-lg font-semibold text-white"
             >
               Ask CineMind
             </button>
 
             <button
               onClick={handleSignout}
-              className="w-full text-left py-3 text-lg font-semibold text-red-400"
+              className="w-full py-3 text-lg font-semibold text-red-400"
             >
               Sign Out
             </button>

@@ -18,3 +18,5 @@ export const MS_IN_DAY = 24 * 60 * 60 * 1000;
 
 export const DEFAULT_AVATAR =
   "https://api.dicebear.com/7.x/identicon/svg?seed=cinemind";
+
+export const STALE_WATCHLIST_DAYS = 14;

@@ -10,6 +10,8 @@ import MovieRow from "./MovieRow";
 import Hero from "./Hero";
 import ContinueWatchingRow from "./intelligence/ContinueWatchingRow";
 import DropOffRow from "./intelligence/DropOffRow";
+import NextBestWatch from "./intelligence/NextBestWatch";
+import StaleWatchlistReminder from "./intelligence/StaleWatchlistReminder";
 
 const Browse = () => {
   const dispatch = useAppDispatch();
@@ -30,13 +32,17 @@ const Browse = () => {
   }, [dispatch, nowPlaying]);
 
   const heroReason =
-    "You often complete slow-burn thrillers and highly rated dramas. This matches your watching pattern.";
+    "You tend to complete slow-burn thrillers and highly rated dramas. This aligns with your viewing behavior.";
 
   return (
     <div className="min-h-svh bg-black">
       {nowPlaying.length > 0 && (
         <Hero movie={nowPlaying[0]} reason={heroReason} />
       )}
+
+      <StaleWatchlistReminder />
+
+      <NextBestWatch />
 
       <ContinueWatchingRow />
       <DropOffRow />

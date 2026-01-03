@@ -1,4 +1,7 @@
 import type { Movie } from "../utils/types";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
+import { addToMyList, removeFromMyList } from "../utils/myListSlice";
+import { selectIsInMyList } from "../utils/movieSelector";
 
 interface Props {
   movie: Movie;
@@ -6,6 +9,9 @@ interface Props {
 }
 
 const Hero = ({ movie, reason }: Props) => {
+  const dispatch = useAppDispatch();
+  const isInWatchlist = useAppSelector(selectIsInMyList(movie.id));
+
   const backdropUrl = movie.backdrop_path
     ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
     : "";
@@ -23,11 +29,11 @@ const Hero = ({ movie, reason }: Props) => {
           CineMind Highlight
         </span>
 
-        <h1 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+        <h1 className="text-3xl sm:text-5xl font-bold mt-3 mb-4">
           {movie.title}
         </h1>
 
-        <p className="text-gray-300 text-sm md:text-base mb-6 line-clamp-4">
+        <p className="text-gray-300 text-sm sm:text-base mb-6 line-clamp-4">
           {movie.overview}
         </p>
 
@@ -44,28 +50,21 @@ const Hero = ({ movie, reason }: Props) => {
 
         <div className="flex flex-col sm:flex-row gap-3 max-w-sm">
           <button
-            className="
-            bg-indigo-600
-            px-4 py-3
-            rounded-md
-            font-semibold
-            text-sm
-            hover:bg-indigo-500
-          "
+            onClick={() =>
+              isInWatchlist
+                ? dispatch(removeFromMyList(movie.id))
+                : dispatch(addToMyList(movie))
+            }
+            className={`px-4 py-3 rounded-md font-semibold text-sm transition ${
+              isInWatchlist
+                ? "bg-emerald-600 hover:bg-emerald-500"
+                : "bg-indigo-600 hover:bg-indigo-500"
+            }`}
           >
-            Add to Watchlist
+            {isInWatchlist ? "In Watchlist ✓" : "Add to Watchlist"}
           </button>
 
-          <button
-            className="
-            bg-white/10
-            px-4 py-3
-            rounded-md
-            font-semibold
-            text-sm
-            hover:bg-white/20
-          "
-          >
+          <button className="bg-white/10 px-4 py-3 rounded-md font-semibold text-sm hover:bg-white/20">
             View Details
           </button>
         </div>

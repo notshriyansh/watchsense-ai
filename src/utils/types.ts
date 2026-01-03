@@ -29,3 +29,15 @@ export interface GPTMovie {
   overview?: string;
   release_date?: string;
 }
+
+export type CardMovie = {
+  id: number;
+  title: string;
+  poster_path: string | null;
+};
+
+export type BaseMovie = {
+  id: number;
+  title: string;
+  poster_path: string | null;
+};
