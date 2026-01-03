@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Movie } from "../utils/types";
+import type { BaseMovie } from "./types";
 
 export interface WatchlistItem {
-  movie: Movie;
+  movie: BaseMovie;
   addedAt: number;
 }
 
@@ -15,26 +15,24 @@ const loadMyList = (): WatchlistItem[] => {
 
     const parsed = JSON.parse(raw);
 
-    if (Array.isArray(parsed)) {
-      return parsed
-        .map((item) => {
-          if (item?.id && !item.movie) {
-            return {
-              movie: item,
-              addedAt: Date.now(),
-            };
-          }
+    if (!Array.isArray(parsed)) return [];
 
-          if (item?.movie?.id && item.addedAt) {
-            return item;
-          }
+    return parsed
+      .map((item): WatchlistItem | null => {
+        if (item?.id && !item.movie) {
+          return {
+            movie: item,
+            addedAt: Date.now(),
+          };
+        }
 
-          return null;
-        })
-        .filter(Boolean);
-    }
+        if (item?.movie?.id && typeof item.addedAt === "number") {
+          return item;
+        }
 
-    return [];
+        return null;
+      })
+      .filter((v): v is WatchlistItem => v !== null);
   } catch {
     return [];
   }
@@ -50,7 +48,7 @@ const myListSlice = createSlice({
   name: "myList",
   initialState: loadMyList(),
   reducers: {
-    addToMyList: (state, action: PayloadAction<Movie>) => {
+    addToMyList: (state, action: PayloadAction<BaseMovie>) => {
       const exists = state.some((item) => item.movie.id === action.payload.id);
 
       if (!exists) {

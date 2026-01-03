@@ -22,7 +22,7 @@ const MovieCard = ({ movie, onHover, onLeave }: Props) => {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       className="
-        group relative w-36 sm:w-40 md:w-44 shrink-0
+        group relative w-36 md:w-44 shrink-0
         rounded-lg overflow-hidden
         bg-[#111827]
         border border-white/10
@@ -33,7 +33,7 @@ const MovieCard = ({ movie, onHover, onLeave }: Props) => {
       <img
         src={posterUrl}
         alt={movie.title}
-        className="w-full h-52 sm:h-56 object-cover"
+        className="w-full h-56 object-cover"
       />
 
       <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition" />
