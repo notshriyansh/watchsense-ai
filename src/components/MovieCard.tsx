@@ -5,11 +5,17 @@ import { selectIsInMyList } from "../utils/movieSelector";
 
 interface Props {
   movie: BaseMovie;
+  contentType?: "movie" | "tv";
   onHover?: () => void;
   onLeave?: () => void;
 }
 
-const MovieCard = ({ movie, onHover, onLeave }: Props) => {
+const MovieCard = ({
+  movie,
+  contentType = "movie",
+  onHover,
+  onLeave,
+}: Props) => {
   const dispatch = useAppDispatch();
   const isInWatchlist = useAppSelector(selectIsInMyList(movie.id));
 
@@ -36,9 +42,24 @@ const MovieCard = ({ movie, onHover, onLeave }: Props) => {
         className="w-full h-56 object-cover"
       />
 
-      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition" />
+      <div
+        className="
+          absolute inset-0
+          bg-linear-to-t from-black/90 via-black/40 to-transparent
+          opacity-100 md:opacity-0
+          md:group-hover:opacity-100
+          transition
+        "
+      />
 
-      <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition">
+      <div
+        className="
+          absolute bottom-0 left-0 right-0 p-3
+          opacity-100 md:opacity-0
+          md:group-hover:opacity-100
+          transition
+        "
+      >
         <h3 className="text-white text-sm font-semibold line-clamp-2">
           {movie.title}
         </h3>
@@ -48,7 +69,12 @@ const MovieCard = ({ movie, onHover, onLeave }: Props) => {
             e.stopPropagation();
             isInWatchlist
               ? dispatch(removeFromMyList(movie.id))
-              : dispatch(addToMyList(movie));
+              : dispatch(
+                  addToMyList({
+                    movie,
+                    contentType,
+                  })
+                );
           }}
           className={`
             mt-2 w-full text-xs font-semibold rounded py-1.5

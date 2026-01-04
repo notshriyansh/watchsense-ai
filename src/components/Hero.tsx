@@ -53,7 +53,12 @@ const Hero = ({ movie, reason }: Props) => {
             onClick={() =>
               isInWatchlist
                 ? dispatch(removeFromMyList(movie.id))
-                : dispatch(addToMyList(movie))
+                : dispatch(
+                    addToMyList({
+                      movie,
+                      contentType: "movie",
+                    })
+                  )
             }
             className={`px-4 py-3 rounded-md font-semibold text-sm transition ${
               isInWatchlist

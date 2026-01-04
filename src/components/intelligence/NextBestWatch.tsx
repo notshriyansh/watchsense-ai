@@ -36,7 +36,7 @@ const NextBestWatch = () => {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 items-start">
-        <MovieCard movie={next} onHover={() => {}} onLeave={() => {}} />
+        <MovieCard movie={next} />
 
         <div className="max-w-md">
           <p className="text-sm text-gray-300 mb-3">
@@ -47,7 +47,12 @@ const NextBestWatch = () => {
             onClick={() =>
               isInWatchlist
                 ? dispatch(removeFromMyList(next.id))
-                : dispatch(addToMyList(next))
+                : dispatch(
+                    addToMyList({
+                      movie: next,
+                      contentType: "movie",
+                    })
+                  )
             }
             className={`px-4 py-2 rounded-md font-semibold transition ${
               isInWatchlist
