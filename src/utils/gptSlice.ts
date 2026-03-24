@@ -40,7 +40,13 @@ const initialState: GPTState = {
 const gptSlice = createSlice({
   name: "gpt",
   initialState,
-  reducers: {},
+  reducers: {
+    clearGPTMovies: (state) => {
+      state.results = [];
+      state.status = "idle";
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchGPTMovies.pending, (state) => {
@@ -57,4 +63,5 @@ const gptSlice = createSlice({
   },
 });
 
+export const { clearGPTMovies } = gptSlice.actions;
 export default gptSlice.reducer;

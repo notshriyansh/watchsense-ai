@@ -1,5 +1,5 @@
 export const LOGO =
-  "https://i.pinimg.com/736x/5f/df/a9/5fdfa98001a201aed81d5119d0456915.jpg";
+  "https://cdn-icons-png.flaticon.com/128/18438/18438354.png";
 
 export const API_OPTIONS = {
   method: "GET",
