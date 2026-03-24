@@ -36,8 +36,6 @@ const DropOffRow = () => {
                     poster_path: item.posterPath,
                   } as any
                 }
-                onHover={() => {}}
-                onLeave={() => {}}
               />
 
               <button

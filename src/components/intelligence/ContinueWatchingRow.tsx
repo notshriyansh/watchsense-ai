@@ -38,8 +38,6 @@ const ContinueWatchingRow = () => {
                   poster_path: item.posterPath,
                 } as any
               }
-              onHover={() => {}}
-              onLeave={() => {}}
             />
 
             <div className="mt-2 h-1 rounded bg-gray-700 overflow-hidden">

@@ -23,7 +23,7 @@ const StaleWatchlistReminder = () => {
       <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
         {staleItems.map(({ movie, addedAt }) => (
           <div key={movie.id} className="shrink-0">
-            <MovieCard movie={movie} onHover={() => {}} onLeave={() => {}} />
+            <MovieCard movie={movie} />
 
             <p className="text-[11px] text-gray-400 mt-1 text-center">
               Added {daysAgo(addedAt)} days ago
