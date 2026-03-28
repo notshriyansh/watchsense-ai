@@ -12,6 +12,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "./ErrorPage";
 import WatchDashboard from "./intelligence/WatchDashboard";
 import AppLayout from "./layout/AppLayout";
+import Landing from "./Landing";
 
 const Body = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,7 @@ const Body = () => {
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <Login />,
+      element: <Landing />,
       errorElement: <ErrorPage />,
     },
     {

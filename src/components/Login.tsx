@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { LOGO } from "../utils/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Login = () => {
       if (user) navigate("/browse");
     });
     return () => unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const handleButtonClick = () => {
     const emailValue = email.current?.value;
@@ -51,75 +52,88 @@ const Login = () => {
   };
 
   return (
-    <div className="relative min-h-svh w-screen flex items-center justify-center">
-      <img
-        className="absolute inset-0 h-full w-full object-cover"
-        src="https://images.unsplash.com/photo-1535223289827-42f1e9919769"
-        alt="CineMind background"
-      />
+    <div className="relative min-h-screen w-screen flex items-center justify-center bg-[#0B0F14] overflow-hidden selection:bg-cyan-500/20 font-sans">
 
-      <div className="relative z-10 flex justify-center items-center h-full">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <img
+          className="absolute inset-0 h-full w-full object-cover opacity-10 mix-blend-overlay grayscale"
+          src="https://images.unsplash.com/photo-1485846234645-a62644f84728"
+          alt="Cinematic Grain"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F14] via-[#0B0F14]/80 to-[#0B0F14]/40" />
+      </div>
+
+      <div className="absolute top-8 left-8 sm:top-12 sm:left-12 z-20 flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
+        <img className="w-8 h-8 sm:w-10 sm:h-10 opacity-90" src={LOGO} alt="CineMind Logo" />
+        <span className="hidden sm:block text-xl font-serif font-medium tracking-tight text-[#E6EAF0]">
+          CineMind AI
+        </span>
+      </div>
+
+      <div className="relative z-10 w-full max-w-sm px-4 sm:px-0">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="
-    bg-black/70 backdrop-blur
-    p-6 sm:p-10
-    rounded-xl
-    w-[90vw] sm:w-105
-    text-white
-    border border-white/10
-  "
+          className="bg-[#0E1622]/80 backdrop-blur-md p-8 sm:p-10 rounded-2xl border border-white/5 w-full flex flex-col animate-slide-up shadow-2xl"
         >
-          <h1 className="font-bold text-2xl sm:text-3xl py-4">
-            {isSignInForm
-              ? "Sign in to CineMind"
-              : "Create your CineMind account"}
-          </h1>
+          <div className="mb-8">
+            <h1 className="font-serif text-2xl font-medium text-[#E6EAF0] tracking-tight mb-2">
+              {isSignInForm ? "Welcome Back" : "Create Profile"}
+            </h1>
+            <p className="text-[#8A93A3] text-sm">
+              {isSignInForm
+                ? "Sign in to access your intelligence dashboard."
+                : "Join CineMind to begin tracking."}
+            </p>
+          </div>
 
-          {!isSignInForm && (
+          <div className="space-y-4">
+            {!isSignInForm && (
+              <input
+                ref={name}
+                type="text"
+                placeholder="Full Name"
+                className="w-full p-3.5 bg-[#0B0F14] border border-white/10 rounded-lg outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors text-[#E6EAF0] placeholder-[#8A93A3] text-sm"
+              />
+            )}
+
             <input
-              ref={name}
+              ref={email}
               type="text"
-              placeholder="Full Name"
-              className="w-full p-3 mb-4 bg-gray-800 rounded"
+              placeholder="Email Address"
+              className="w-full p-3.5 bg-[#0B0F14] border border-white/10 rounded-lg outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors text-[#E6EAF0] placeholder-[#8A93A3] text-sm"
             />
-          )}
 
-          <input
-            ref={email}
-            type="text"
-            placeholder="Email Address"
-            className="w-full p-3 mb-4 bg-gray-800 rounded"
-          />
-
-          <input
-            ref={password}
-            type="password"
-            placeholder="Password"
-            className="w-full p-3 mb-6 bg-gray-800 rounded"
-          />
+            <input
+              ref={password}
+              type="password"
+              placeholder="Password"
+              className="w-full p-3.5 bg-[#0B0F14] border border-white/10 rounded-lg outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors text-[#E6EAF0] placeholder-[#8A93A3] text-sm"
+            />
+          </div>
 
           {errorMessage && (
-            <p className="text-red-400 text-sm mb-2">{errorMessage}</p>
+            <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-md">
+              <p className="text-red-400 text-xs font-medium">{errorMessage}</p>
+            </div>
           )}
 
           <button
             type="button"
             onClick={handleButtonClick}
-            className="w-full p-3 bg-indigo-600 rounded font-semibold hover:bg-indigo-500"
+            className="w-full mt-8 py-3.5 bg-[#E6EAF0] hover:bg-white text-[#0B0F14] rounded-lg font-medium text-sm transition-colors active:scale-[0.98]"
           >
-            {isSignInForm ? "Sign In" : "Sign Up"}
+            {isSignInForm ? "Sign In" : "Continue"}
           </button>
 
-          <p className="mt-6 text-gray-400">
-            {isSignInForm ? "New to CineMind? " : "Already using CineMind? "}
-            <span
+          <div className="mt-8 text-center">
+            <button
+              type="button"
               onClick={() => setIsSignForm(!isSignInForm)}
-              className="text-white cursor-pointer hover:underline"
+              className="text-[#8A93A3] hover:text-[#E6EAF0] text-sm transition-colors border-b border-transparent hover:border-[#E6EAF0] pb-0.5"
             >
-              {isSignInForm ? "Create an account." : "Sign in."}
-            </span>
-          </p>
+              {isSignInForm ? "Create an account" : "Sign in to existing"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
