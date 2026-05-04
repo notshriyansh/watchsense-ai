@@ -34,4 +34,5 @@ export const saveMyListState = (state: any) => {
 export const clearPersistedData = () => {
   localStorage.removeItem(WATCH_KEY);
   localStorage.removeItem(MYLIST_KEY);
+  localStorage.removeItem("cinemind_recommendation_history");
 };

@@ -4,14 +4,17 @@ export const buildExplainRecommendationPrompt = ({
   recommendedTitle,
   overview,
   watchHistory,
+  localExplanation,
 }: {
   recommendedTitle: string;
   overview: string;
   watchHistory: WatchProgress[];
+  localExplanation: string;
 }) => {
   const historySummary = watchHistory.map((w) => ({
     title: w.title,
     progress: w.progressPercent,
+    status: w.status,
   }));
 
   return `
@@ -26,8 +29,11 @@ Recommended title:
 Overview:
 ${overview}
 
+Local retrieval explanation:
+${localExplanation}
+
 Explain WHY this title fits the user's taste.
-Mention patterns from their watch history.
+Use the local retrieval explanation and mention patterns from watch history.
 2–3 lines max.
 No emojis.
 No hype.

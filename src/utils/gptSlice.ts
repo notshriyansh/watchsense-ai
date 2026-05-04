@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { generateGeminiResponse } from "./geminiClient";
 import { searchTMDBMovie } from "./tmdbClient";
+import { getCachedValue, setCachedValue } from "./cache";
 import type { Movie } from "./types";
 
 export const fetchGPTMovies = createAsyncThunk<
@@ -9,6 +10,11 @@ export const fetchGPTMovies = createAsyncThunk<
   { rejectValue: string }
 >("gpt/fetchMovies", async (query, { rejectWithValue }) => {
   try {
+    const cacheKey = `gpt:${query.trim().toLowerCase()}`;
+    const cached = getCachedValue<Movie[]>(cacheKey);
+
+    if (cached) return cached;
+
     const movieNames = await generateGeminiResponse(query);
 
     const tmdbPromises = movieNames.map((name: string) =>
@@ -18,9 +24,10 @@ export const fetchGPTMovies = createAsyncThunk<
     const tmdbResults = await Promise.all(tmdbPromises);
 
     const movies: Movie[] = tmdbResults.flat();
+    setCachedValue(cacheKey, movies);
 
     return movies;
-  } catch (err) {
+  } catch {
     return rejectWithValue("Failed to fetch GPT movies");
   }
 });
