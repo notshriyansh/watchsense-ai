@@ -1,5 +1,6 @@
 import Header from "../Header";
 import type { ReactNode } from "react";
+import Footer from "./footer";
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -16,7 +17,10 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
 
       <Header />
 
-      <main className="pt-20">{children}</main>
+      <main className="pt-20 min-h-[calc(100vh-80px)] flex flex-col">
+        <div className="grow">{children}</div>
+        <Footer />
+      </main>
     </div>
   );
 };
