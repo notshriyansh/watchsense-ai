@@ -51,17 +51,18 @@ const RecommendationCard = ({ movie }: RecommendationCardProps) => {
   const quickBadge = buildQuickBadge(movie.matchFeatures);
 
   return (
-    <div className="flex flex-col gap-2">
-      <span
-        className="text-xs text-indigo-400 truncate px-0.5"
-        title={quickBadge}
-      >
-        {quickBadge}
-      </span>
+    <div className="flex flex-col w-full">
+      <div className="h-5 mb-1">
+        <span className="text-xs text-indigo-400 truncate block">
+          {quickBadge}
+        </span>
+      </div>
 
-      <MovieCard movie={movie} />
+      <div className="w-full">
+        <MovieCard movie={movie} />
+      </div>
 
-      <div className="flex items-center justify-between gap-2 mt-1">
+      <div className="mt-2 flex items-center gap-3">
         <button
           onClick={() =>
             isInWatchlist
@@ -80,19 +81,13 @@ const RecommendationCard = ({ movie }: RecommendationCardProps) => {
         <button
           onClick={handleToggleExplanation}
           className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors underline underline-offset-2"
-          aria-expanded={showExplanation}
-          aria-label={`Why was ${movie.title} recommended?`}
         >
           {showExplanation ? "Hide" : "Why this?"}
         </button>
       </div>
 
       {showExplanation && (
-        <div
-          className="bg-neutral-900 border border-white/10 rounded-md p-3 text-sm text-gray-300 transition-all duration-200"
-          role="region"
-          aria-label="Recommendation explanation"
-        >
+        <div className="mt-2 bg-neutral-900 border border-white/10 rounded-md p-3 text-sm text-gray-300">
           {isLoadingExplanation ? (
             <span className="text-gray-500 italic">Analyzing...</span>
           ) : explanation ? (
